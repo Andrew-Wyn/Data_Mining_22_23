@@ -1,3 +1,6 @@
 # Python
 venv
 .ipynb_checkpoints/
+
+# MACOS
+.DS_Store
