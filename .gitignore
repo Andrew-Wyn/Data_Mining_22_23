@@ -4,3 +4,7 @@ venv
 
 # MACOS
 .DS_Store
+
+
+# Miscellaneous
+dataset
