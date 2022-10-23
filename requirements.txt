@@ -3,3 +3,8 @@ pandas
 scikit-learn
 matplotlib
 scipy
+<<<<<<< Updated upstream
+=======
+tqdm
+pyclustering
+>>>>>>> Stashed changes
