@@ -1,6 +1,7 @@
 # Python
 venv
 .ipynb_checkpoints/
+__pycache__/
 
 # MACOS
 .DS_Store
