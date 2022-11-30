@@ -3,6 +3,7 @@ from sklearn.model_selection import train_test_split
 from sklearn.metrics import classification_report
 import pandas as pd
 import matplotlib.pyplot as plt
+import numpy as np
 
 #metrics computed on the test set
 def report_scores(test_label, test_pred):
@@ -38,7 +39,8 @@ def discretize_data(dataset, variables):
 
 
 def prepare_data(data):
-    categorical_features = ["lang", "bot", "created_at", "name"]
+    # categorical_features = ["lang", "bot", "created_at", "name"]
+    categorical_features = ["lang", "bot", "name"]
 
     # remove categorical variables
     classification_features = list(data.columns).copy()
@@ -48,6 +50,9 @@ def prepare_data(data):
         classification_features.remove(feat)
         
     print(f"Classification features : {classification_features}")
+
+    # convert datetime to timestamp to permit classification
+    data["created_at"] = pd.to_datetime(data.created_at).values.astype(np.int64) // 10 ** 9
 
     data_classification = data[classification_features]
     data_label = data.pop("bot")
