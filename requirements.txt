@@ -6,3 +6,5 @@ scipy
 tqdm
 pyclustering
 shap
+lime
+pyDOE2
