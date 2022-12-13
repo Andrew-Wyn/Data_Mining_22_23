@@ -29,8 +29,8 @@ def discretize_data(dataset, variables):
     for variable in variables:
         #get the unique variable's values
         var = sorted(dataset[variable].unique())
-        
-        #generate a mapping from the variable's values to the number representation  
+
+        #generate a mapping from the variable's values to the number representation
         mapping = dict(zip(var, range(0, len(var) + 1)))
 
         #add a new colum with the number representation of the variable
@@ -48,7 +48,7 @@ def prepare_data(data):
     for feat in categorical_features:
     # for feat in ["lang", "bot", "created_at", "name", "reply_count_entropy", "favorite_count_entropy"]:
         classification_features.remove(feat)
-        
+
     print(f"Classification features : {classification_features}")
 
     # convert datetime to timestamp to permit classification
@@ -56,8 +56,8 @@ def prepare_data(data):
 
     data_classification = data[classification_features]
     data_label = data.pop("bot")
-    
-    train_set, test_set, train_label, test_label = train_test_split(data_classification, data_label, stratify =data_label, test_size=0.30)
+
+    train_set, test_set, train_label, test_label = train_test_split(data_classification, data_label, stratify =data_label, test_size=0.30, random_state=42)
 
     return train_set, test_set, train_label, test_label
 
