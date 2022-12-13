@@ -9,3 +9,5 @@ shap
 lime
 pyDOE2
 aix360
+tabnet
+interpret
