@@ -9,3 +9,4 @@ shap
 lime
 pyDOE2
 aix360
+scikeras
