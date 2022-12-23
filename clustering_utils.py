@@ -33,7 +33,7 @@ def plot_radar_clusters(df, cluster_centers, method=None):
         # Initialise the spider plot
         ax = plt.subplot(polar=True)
         # Draw one axe per variable + add labels labels yet
-        plt.xticks(angles[:-1], df.columns, color='grey', size=8) 
+        plt.xticks(angles[:-1], df.columns, color='grey', size=8)
         # Plot data
         ax.plot(angles, values, linewidth=1, linestyle='solid')
         # Fill area
@@ -80,17 +80,28 @@ def plot_numerical_features_clusters(df, labels, num_cluster):
         plt.show()
 
 
+
+
+
 def scatter_features_clusters(df, labels):
     """
     Funciton that print and plot distribution of numerical features conditioned by the cluster
     """
+    colors = plt.cm.jet(np.linspace(0,1,len(set(labels))))
+
     for i in range(len(df.columns)):
         for j in range(i+1, len(df.columns)):
             feature_1 = df.columns[i]
             feature_2 = df.columns[j]
 
             print(f"{feature_1} - {feature_2}")
-            plt.scatter(df[feature_1], df[feature_2], c=labels, s=20)
+            for label in set(labels):
+                x = df[feature_1][labels == label]
+                y = df[feature_2][labels == label]
+                color = labels[labels == label]
+                plt.scatter(x, y, c=np.array([colors[label]]), label=str(label))
+
+            plt.legend()
             plt.tick_params(axis='both', which='major', labelsize=22)
             plt.show()
 
