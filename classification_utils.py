@@ -5,13 +5,13 @@ import pandas as pd
 import matplotlib.pyplot as plt
 import numpy as np
 
-#metrics computed on the test set
+#This function prints the metrics computed on the test set
 def report_scores(test_label, test_pred):
     print(classification_report(test_label, 
                             test_pred, 
                             target_names=['<=50', '>50']))
 
-
+#This function evaluates the accuracy on the training and test set
 def print_metrics(train_label, train_pred, test_label, test_pred):
     #evaulate the accuracy on the train set and the test set
     #metrics also contains precision, recall, f1 and the support
@@ -23,7 +23,7 @@ def print_metrics(train_label, train_pred, test_label, test_pred):
     print('Support train set ', metrics.precision_recall_fscore_support(train_label, train_pred))
 
 
-#function to discretize the variables
+#This function discretize the variables
 #input: the dataset and the list of variables' names to discretize
 def discretize_data(dataset, variables):
     for variable in variables:
@@ -37,7 +37,7 @@ def discretize_data(dataset, variables):
         dataset[variable+'_num'] = dataset[variable].map(mapping).astype(int)
     return dataset
 
-
+#The following function prepares the data, removing all the categorical features and transforming the created_at feature in timestamp. Finally, it returns the result of train_test_split on the transformed dataset.
 def prepare_data(data):
     # categorical_features = ["lang", "bot", "created_at", "name"]
     categorical_features = ["lang", "bot", "name"]
@@ -61,7 +61,7 @@ def prepare_data(data):
 
     return train_set, test_set, train_label, test_label
 
-
+#The following function plots the Lang feature distribution among all the bot and no bot users
 def plot_lang_hist(data):
     bot_xt_pct = pd.crosstab(data.lang, data["bot"])
     bot_xt_pct.plot(kind='bar', stacked=False, 
