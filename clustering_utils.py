@@ -2,7 +2,7 @@ import numpy as np
 import pandas as pd
 import matplotlib.pyplot as plt
 from math import pi
-
+import scipy
 
 def plot_parallel_coordinates_clusters(df, cluster_centers, method=None):
     """
@@ -59,8 +59,8 @@ def categorical_hist_clusters(df, labels, feature_name, method=None):
     Function that plot the number of the profiles conditioned by the value of certain feature
     """
     bot_xt_pct = pd.crosstab(labels, df[feature_name])
-    bot_xt_pct.plot(kind='bar', stacked=False, 
-                       title=f'{feature_name} per cluster')
+    bot_xt_pct.plot(kind='bar', stacked=False,
+                       title=f'{feature_name} per cluster', figsize=(11, 6))
     plt.xlabel('Cluster')
     plt.ylabel(feature_name)
     plt.savefig(f"images/clustering/{method}_{feature_name}_hist.png")
@@ -78,9 +78,6 @@ def plot_numerical_features_clusters(df, labels, num_cluster):
         df[i_samples].hist(figsize=(10,10))
         plt.xticks(rotation=90)
         plt.show()
-
-
-
 
 
 def scatter_features_clusters(df, labels):
@@ -101,6 +98,8 @@ def scatter_features_clusters(df, labels):
                 color = labels[labels == label]
                 plt.scatter(x, y, c=np.array([colors[label]]), label=str(label))
 
+            plt.xlabel(feature_1)
+            plt.ylabel(feature_2)
             plt.legend()
             plt.tick_params(axis='both', which='major', labelsize=22)
             plt.show()
@@ -118,3 +117,36 @@ def reverse_log_skewed(X, df, skewed_features):
         i = list(df.columns).index(feature)
         X[:, i] = np.exp(X[:, i]) - 1
     return X
+
+
+def cluster_hist(labels):
+    """
+        Count the number of samples in each cluster
+    """
+    hist, bins = np.histogram(labels,
+                          bins=range(0, len(set(labels)) + 1))
+    return dict(zip(bins, hist))
+
+
+def entropy(data):
+    """
+    Calculates entropy of the passed pd.Series
+    """
+
+    p_data = data.value_counts()/data.shape[0]        # counts occurrence of each value
+
+    entropy = scipy.stats.entropy(p_data)  # get entropy from counts
+
+    return entropy
+
+
+def entropy_clusters(df, labels, feature):
+    """
+    Calculates entropy of passed feature per cluster
+    """
+
+    df_entropy = df.copy()
+
+    df_entropy["labels"] = labels
+
+    return df_entropy.groupby("labels")[feature].apply(entropy)
