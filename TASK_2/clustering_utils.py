@@ -72,6 +72,7 @@ def plot_numerical_features_clusters(df, labels, num_cluster):
     Funciton that print and plot distribution of numerical features conditioned by the cluster
     """
     for i in range(num_cluster):
+        print(f"cluster {i}:")
         i_samples = labels==i
         df[i_samples].boxplot()
         plt.xticks(rotation=90)
