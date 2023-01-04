@@ -110,6 +110,8 @@ def preprocess_skewed_features(df, skewed_features):
     df_num_not_skewed = df.copy()
     df_num_not_skewed[skewed_features] = df[skewed_features].apply(lambda x: np.log(x + 1))
 
+    df_num_not_skewed.rename(columns = {f: "log_"+f for f in skewed_features}, inplace=True)
+
     return df_num_not_skewed
 
 
